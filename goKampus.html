@@ -120,7 +120,7 @@
                 
                 userDetails.data = raw;
                 console.log(userDetails.data, 'Data~~~~~>>')
-                window.parent.postMessage(JSON.stringify({
+                window.parent.postMessage({
                     event_code: 'ym-client-event', 
                     data: {
                         event: {
@@ -128,7 +128,7 @@
                         data: userDetails,
                         }
                     } 
-                }), '*');
+                }, '*');
             }
             
         }
