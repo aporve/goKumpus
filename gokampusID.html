@@ -107,28 +107,28 @@
             
             if((name !== '') && (email !== '') && (number !== '') ) {
                 
-                var raw = JSON.stringify({
+                var raw = {
                     "details": {
                     "companyName": "goKampus",
                     "name": name,
                     "email": email,
                     "number" : number
                     }
-                });
+                };
 
                console.log(raw, 'Raw~~~~~~~~~~~~>>')
                 
                 userDetails.data = raw;
                 console.log(userDetails.data, 'Data~~~~~>>')
-                window.parent.postMessage(JSON.stringify({
-                    event_code: 'ym-client-event', data: JSON.stringify({
+                window.parent.postMessage({
+                    event_code: 'ym-client-event', 
+                    data: {
                         event: {
                         code: "userDetails",
                         data: userDetails,
-                    
                         }
-                    })
-                }), '*');
+                    } 
+                }, '*');
             }
             
         }
