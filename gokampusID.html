@@ -71,16 +71,16 @@
                 </div> 
                 <form>
                     <div class="form-group m-2">
-                        <label for="exampleInputEmail1">Nama</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama">
+                        <label for="UserName">Nama</label>
+                        <input type="text" class="form-control" id="UserName" aria-describedby="emailHelp" placeholder="Nama">
                     </div>
                     <div class="form-group m-2">
-                        <label for="exampleInputPassword1">Email</label>
-                        <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                        <label for="userEmail">Email</label>
+                        <input type="email" class="form-control" id="userEmail" placeholder="Email">
                     </div>
                     <div class="form-group m-2">
-                        <label for="exampleInputPassword1">Nomor WhatsApp</label>
-                        <input type="tel" class="form-control" id="exampleInputPassword1" placeholder="Nomor WhatsApp">
+                        <label for="userNumber">Nomor WhatsApp</label>
+                        <input type="tel" class="form-control" id="userNumber" placeholder="Nomor WhatsApp">
                         </div>
                     <div class="form-group mt-3">
                         <button type="submit" class="form-control btn btn-primary">Submit</button>
@@ -93,179 +93,45 @@
     <script src="https://kit.fontawesome.com/8bbf807456.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
-        let feedback;
-        let data = {};
-        let feedback2;
-        let radioFeedback;
-        let textareaValue ;
-
-        var reason = document.getElementsByName("reason");
-        function good() {
-            feedback = 'good';
-            $('#emotican').hide();
-            $("#textArea").show();
-            $("#textArea").css('margin-top', '50px')
-            $('#submitBtn').show();
-            console.error("feedback ----->", feedback );
-        }
-
-        function bad() {
-            $('#emotican').hide();
-            $("#textArea").hide();
-            $("#dropdown").show();
-            $('#submitBtn').show();
-            document.getElementById('feedback').focus();
-            feedback = 'bad';
-            console.error( "feedback ----->", feedback);
-        }
-
-        function triggerText(value) {
-            radioFeedback = $('input[name="reason"]:checked').val();
-            console.error('radioFeedback --->',radioFeedback);
-        
-            if(value == 'F6') {
-                $("#error").hide();
-                $("#dropdown").hide();
-                $("#textArea").show();
-                $("#textArea").css('margin-top', '50px')
-                $('#submitBtn').show();
-            }
-        
-        }
-
-
+        let name,email,number;
+        let userDetails = {}
 
         function details() {
-            submitDetails = document.getElementById('feedback').value;
-            textareaValue = document.getElementById('feedback').value;
+            name = document.getElementById('UserName').value;
+            email = document.getElementById('userEmail').value;
+            number = document.getElementById('userNumber').value;
+
+            console.log(name)
+            console.log(email)
+            console.log(number)
             
-            if((feedback =='good') && (textareaValue !== '')) {
-                $("#error").hide();
-                $("#textArea").css('margin-top', '50px')
-                data.feedback = feedback;
-                data.radioButtonValue = radioFeedback
-                data.submitDetails = submitDetails;
-           
-                console.log('Submit Details---->>', );
-                var feedbackDetails = {}
+            if((name !== '') && (email !== '') && (number !== '') ) {
+                
                 var raw = JSON.stringify({
                     "details": {
-                    "companyName": "ZALORA",
-                    "feedbackEmoji": feedback,
-                    "radioValue": radioFeedback,
-                    "textareaValue" : textareaValue
+                    "companyName": "goKampus",
+                    "name": name,
+                    "email": email,
+                    "number" : number
                     }
                 });
 
-                document.getElementById('feedback').value = ''
-                // $("#form").trigger("reset");
+               console.log(raw, 'Raw~~~~~~~~~~~~>>')
                 
-                feedbackDetails.data = raw;
+                userDetails.data = raw;
+                console.log(userDetails.data, 'Data~~~~~>>')
                 window.parent.postMessage(JSON.stringify({
                     event_code: 'ym-client-event', data: JSON.stringify({
                         event: {
-                        code: "feedback",
-                        data: feedbackDetails,
+                        code: "userDetails",
+                        data: userDetails,
                     
                         }
                     })
                 }), '*');
-                $("#submitBtn").hide();
-                $("#textArea").hide();
-                $("#error").hide();
-                $("#greeting").show();
             }
-            else if((feedback =='bad') && (radioFeedback !== 'Other Feedback') && ((reason[0].checked == true) || (reason[1].checked == true) || (reason[2].checked == true) || (reason[3].checked == true)|| (reason[4].checked == true))) {
-                $("#error").hide();
-                $("#textArea").css('margin-top', '50px')
-                data.feedback = feedback;
-                data.radioButtonValue = radioFeedback
-                data.submitDetails = submitDetails;
             
-                console.log('Submit Details---->>',data);
-                var feedbackDetails = {}
-                var raw = JSON.stringify({
-                    "details": {
-                    "companyName": "ZALORA",
-                    "feedbackEmoji": feedback,
-                    "radioValue": radioFeedback,
-                    "textareaValue" : textareaValue
-                    }
-                });
-
-                document.getElementById('feedback').value = ''
-                $("#form").trigger("reset");
-                
-                feedbackDetails.data = raw;
-                window.parent.postMessage(JSON.stringify({
-                    event_code: 'ym-client-event', data: JSON.stringify({
-                        event: {
-                        code: "feedback",
-                        data: feedbackDetails,
-                    
-                        }
-                    })
-                }), '*');
-                $("#dropdown").hide();
-                $('#submitBtn').hide();
-                $("#greeting").show();
-
-            }else if((feedback =='bad') && (radioFeedback == 'Other Feedback') && (textareaValue !== '')) {
-                $("#error").hide();
-                $("#textArea").css('margin-top', '50px')
-                data.feedback = feedback;
-                data.radioButtonValue = radioFeedback
-                data.submitDetails = submitDetails;
-            
-                console.log('Submit Details---->>',data);
-                var feedbackDetails =  {}
-                var raw = JSON.stringify({
-                    "details": {
-                    "companyName": "ZALORA",
-                    "feedbackEmoji": feedback,
-                    "radioValue": radioFeedback,
-                    "textareaValue" : textareaValue
-                    }
-                });
-
-                document.getElementById('feedback').value = ''
-                $("#form").trigger("reset");
-                
-                feedbackDetails.data = raw;
-                window.parent.postMessage(JSON.stringify({
-                    event_code: 'ym-client-event', data: JSON.stringify({
-                        event: {
-                        code: "feedback",
-                        data: feedbackDetails,
-                    
-                        }
-                    })
-                }), '*');
-                $("#submitBtn").hide();
-                $("#textArea").hide();
-                $("#error").hide();
-                $("#greeting").show();
-            }else if((feedback =='bad') && (radioFeedback !== 'Other Feedback') && ((reason[0].checked == false) || (reason[1].checked == false) || (reason[2].checked == false) || (reason[3].checked == false)|| (reason[4].checked == false)|| (reason[5].checked == false))) {
-                $("#error").show();
-                $("#error").css('margin-top', '10px')
-                $("#error").css('margin-left', '35px')
-                $("#error").css('font-size', '14px')
-                $("#error").css('margin-bottom', '5px')
-                $("#error").css('color', 'red')
-                $("#error").text('Please select your Reason...')
-                
-            }else {
-                $("#error").show();
-                $("#error").css('margin-top', '50px')
-                $("#error").css('font-size', '14px')
-                $("#error").css('margin-left', '35px')
-                $("#error").css('margin-bottom', '5px')
-                $("#error").css('color', 'red')
-                $("#textArea").css('margin-top', '0px')                
-                $("#error").text('Please provide feedback...')
-            }
         }
-
     </script>
 </body>
 </html>
