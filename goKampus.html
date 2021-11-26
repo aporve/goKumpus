@@ -121,13 +121,13 @@
                 userDetails.data = raw;
                 console.log(userDetails.data, 'Data~~~~~>>')
                 window.parent.postMessage(JSON.stringify({
-                    event_code: 'ym-client-event', data: JSON.stringify({
+                    event_code: 'ym-client-event', 
+                    data: {
                         event: {
                         code: "userDetails",
                         data: userDetails,
-                    
                         }
-                    })
+                    } 
                 }), '*');
             }
             
