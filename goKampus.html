@@ -107,14 +107,14 @@
             
             if((name !== '') && (email !== '') && (number !== '') ) {
                 
-                var raw = JSON.stringify({
+                var raw = {
                     "details": {
                     "companyName": "goKampus",
                     "name": name,
                     "email": email,
                     "number" : number
                     }
-                });
+                };
 
                console.log(raw, 'Raw~~~~~~~~~~~~>>')
                 
